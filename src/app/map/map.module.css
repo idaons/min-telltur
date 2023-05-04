@@ -1,0 +1,10 @@
+.map {
+    height: max(20rem, 90vh);
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.map:global(.leaflet-marker-icon) {
+    border-radius: 50%;
+    filter: drop-shadow(0 0 0.5rem hsl(0, 0%, 40%, 0.5));
+}
