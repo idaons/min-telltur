@@ -25,8 +25,13 @@ import Leaflet, {
   circleMarker,
 } from "leaflet";
 import SvgComponent from "@/app/map/BeenThere";
+import { convertPoint } from "@/pointToLatLon";
+import { tiPaToppHamaroy } from "@/app/TiPaToppHamaroy";
 
-const visitedIcon = Leaflet.icon({ iconUrl: "/CheckmarkCircleFill.svg" });
+const visitedIcon = Leaflet.icon({
+  iconUrl: "/CheckmarkCircleFill.svg",
+  className: styles.markerIcon,
+});
 const notVisitedIcon = Leaflet.icon({ iconUrl: "/NotVisited.svg" });
 const INITIAL_BOUNDS: LatLngBoundsExpression = [
   [59.89843428245928, 10.651118],
@@ -54,17 +59,22 @@ const Map = () => {
           <Popup>Hjelsengåsen Oppeid. 2 poeng.</Popup>
         </Marker>
           */}
-        {tiPaToppHamaroy.map((item) => (
-          <Marker
-            position={item.position}
-            icon={item.visited ? visitedIcon : notVisitedIcon}
-          >
-            <Popup>
-              <b>{item.name}</b>
-              <div>{item.poeng} poeng</div>
-            </Popup>
-          </Marker>
-        ))}
+        {tiPaToppHamaroy.map((item) => {
+          const point = convertPoint(item.geom);
+          if (!item.geom) return;
+          return (
+            <Marker
+              key={item.name}
+              position={point}
+              icon={item.visited ? visitedIcon : notVisitedIcon}
+            >
+              <Popup>
+                <b>{item.name}</b>
+                <div>{item.poeng} poeng</div>
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     </>
   );

@@ -9,7 +9,8 @@ wgs84 = pyproj.CRS('EPSG:4326')
 
 # Define the point in Web Mercator coordinates
 #point = (1735092.0897735602, 10473753.703991326) #hjelseng
-point = (1715668.3993602246, 10445744.263539342) #straumstien
+#point = (1715668.3993602246, 10445744.263539342) #straumstien
+point = (1716883.8393001189, 10447007.947887953)
 
 # Create a transformer to convert from Web Mercator to WGS84
 transformer = pyproj.Transformer.from_crs(web_mercator, wgs84)
