@@ -1,5 +1,7 @@
+import { useLocalStorageState } from "@/useLocalStorage";
+
 const Visits = () => {
-  const [visited, setVisited] = useLocalStorage("tiPaToppVisited", false);
+  const [visited, setVisited] = useLocalStorageState("tiPaToppVisited", false);
 
   return (
     <div>
