@@ -13,7 +13,7 @@
 }
 
 .notVisitedIcon {
-    background: #1c813a;
+    background: #1c813a; /* Alt: rgb(0 161 228), samme som i hamarøy kommunes våpenskjold*/
     border-radius: 50%;
     padding: 0.15rem !important;
 }
