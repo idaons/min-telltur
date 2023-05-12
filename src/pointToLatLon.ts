@@ -1,4 +1,5 @@
 import proj4 from "proj4";
+import { LatLngExpression } from "leaflet";
 // Define source and destination coordinate reference systems (CRS)
 const sourceCRS = "EPSG:3857";
 const destCRS = "EPSG:4326"; // WGS84
@@ -9,7 +10,9 @@ export function convertPoint(point: string) {
   const regex = /POINT\((\d+.\d+) (\d+.\d+)\)/g;
   const test = point.match(regex);
   const match = regex.exec(point);
-  console.log("regex", match[1], match[2]);
+  if (!match || match.length < 2) {
+    throw new Error("converting to lat/long failed");
+  }
   //const point3857 = [1735092.0897735602, 10473753.703991326];
   const point3857 = [+match[1], +match[2]];
   // Convert the point to WGS84 (latitude and longitude)
@@ -20,6 +23,6 @@ export function convertPoint(point: string) {
   const longitude = point4326[0];
   console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 
-  return [latitude, longitude];
+  return [latitude, longitude] as LatLngExpression;
   //  console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 }

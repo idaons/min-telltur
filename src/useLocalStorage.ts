@@ -1,11 +1,29 @@
-const useLocalStorage = (storageKey, fallbackState) => {
-  const [value, setValue] = React.useState(
-    JSON.parse(localStorage.getItem(storageKey)) ?? fallbackState
-  );
+import React, { Dispatch, SetStateAction } from "react";
+
+function useLocalStorageState<S = undefined>(
+  key: string,
+  defaultValue: S,
+  { serialize = JSON.stringify, deserialize = JSON.parse } = {}
+): [S, Dispatch<SetStateAction<S>>] {
+  const [state, setState] = React.useState<S>(() => {
+    const localStorageValue = window.localStorage.getItem(key);
+
+    if (localStorageValue) {
+      try {
+        return deserialize(localStorageValue);
+      } catch (error) {
+        window.localStorage.removeItem(key);
+      }
+    }
+
+    return typeof defaultValue === "function" ? defaultValue() : defaultValue;
+  });
 
   React.useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(value));
-  }, [value, storageKey]);
+    window.localStorage.setItem(key, serialize(state));
+  }, [key, state, serialize]);
 
-  return [value, setValue];
-};
+  return [state, setState];
+}
+
+export { useLocalStorageState };

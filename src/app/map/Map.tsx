@@ -3,33 +3,14 @@
 // This is a Client Component. It receives data as props and
 // has access to state and effects just like Page components
 // in the `pages` directory.
-/*
-export default function HomePage({ recentPosts }) {
-    return (
-        <div>
-            {recentPosts.map((post) => (
-                <div key={post.id}>{post.title}</div>
-            ))}
-        </div>
-    );
-}
- */
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
-import Leaflet, {
-  LatLngBoundsExpression,
-  icon,
-  map,
-  circleMarker,
-} from "leaflet";
-import SvgComponent from "@/app/map/PinIcon";
+import Leaflet, { LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import { convertPoint } from "@/pointToLatLon";
-import { tiPaToppHamaroy } from "@/app/TiPaToppHamaroy";
-import PinIcon from "@/app/map/PinIcon";
-import { renderToString } from "react-dom/server";
-
+import { tiPaToppHamaroy } from "@/TiPaToppHamaroy";
+/*
 const LeafIcon = Leaflet.Icon.extend({
   options: {
     className: styles.markerIcon,
@@ -39,6 +20,8 @@ const LeafIcon = Leaflet.Icon.extend({
     //    popupAnchor: [-3, -76],
   },
 });
+
+ */
 
 const visitedIcon = Leaflet.icon({
   iconUrl: "/CheckmarkCircleFill.svg",
@@ -57,12 +40,12 @@ const INITIAL_BOUNDS: LatLngBoundsExpression = [
 ];
 
 const Map = () => {
-  const position = [68.089869, 15.586681];
+  const mapCenter: LatLngExpression = [68.081251, 15.650711];
 
   return (
     <>
       <MapContainer
-        center={position}
+        center={mapCenter}
         zoom={10}
         scrollWheelZoom={false}
         className={styles.map}

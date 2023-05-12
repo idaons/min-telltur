@@ -33,6 +33,6 @@
   },
   "lint-staged": {
     "*.{js,jsx,json,md,mdx,ts,tsx}": "prettier --write",
-    "*.{js,jsx,ts,tsx}": "npm run lint"
+    "*.{js,jsx,ts,tsx}": "eslint"
   }
 }
