@@ -1,7 +1,6 @@
 .map {
-    height: max(20rem, 90vh);
+    height: max(20rem,100vh);
     width: 100%;
-    margin-bottom: 20px;
 }
 
 .map:global(.leaflet-marker-icon) {
@@ -14,7 +13,7 @@
 }
 
 .notVisitedIcon {
-    background: #4299E1;
+    background: #1c813a;
     border-radius: 50%;
     padding: 0.15rem !important;
 }
