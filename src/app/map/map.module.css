@@ -10,5 +10,5 @@
 }
 
 .markerIcon {
-
+    filter: drop-shadow(0 0.3rem 0.2rem hsl(0, 0%, 40%, 0.5));
 }

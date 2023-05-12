@@ -24,15 +24,33 @@ import Leaflet, {
   map,
   circleMarker,
 } from "leaflet";
-import SvgComponent from "@/app/map/BeenThere";
+import SvgComponent from "@/app/map/PinIcon";
 import { convertPoint } from "@/pointToLatLon";
 import { tiPaToppHamaroy } from "@/app/TiPaToppHamaroy";
+import PinIcon from "@/app/map/PinIcon";
+import { renderToString } from "react-dom/server";
+
+const LeafIcon = Leaflet.Icon.extend({
+  options: {
+    className: styles.markerIcon,
+    iconSize: [38, 38],
+    //    iconAnchor: [22, 94],
+    //    shadowAnchor: [4, 62],
+    //    popupAnchor: [-3, -76],
+  },
+});
 
 const visitedIcon = Leaflet.icon({
   iconUrl: "/CheckmarkCircleFill.svg",
   className: styles.markerIcon,
+  iconSize: [30, 30],
 });
-const notVisitedIcon = Leaflet.icon({ iconUrl: "/NotVisited.svg" });
+const notVisitedIcon = Leaflet.icon({
+  iconUrl: "/NotVisited2.svg",
+  className: styles.markerIcon,
+  iconSize: [30, 30],
+});
+
 const INITIAL_BOUNDS: LatLngBoundsExpression = [
   [59.89843428245928, 10.651118],
   [59.9534114, 10.81431433498766],
@@ -54,11 +72,6 @@ const Map = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/*
-                  <Marker position={position} icon={markerIcon}>
-          <Popup>Hjelsengåsen Oppeid. 2 poeng.</Popup>
-        </Marker>
-          */}
         {tiPaToppHamaroy.map((item) => {
           const point = convertPoint(item.geom);
           if (!item.geom) return;
@@ -66,7 +79,13 @@ const Map = () => {
             <Marker
               key={item.name}
               position={point}
-              icon={item.visited ? visitedIcon : notVisitedIcon}
+              icon={
+                process.env.NODE_ENV === "development"
+                  ? item.visited
+                    ? visitedIcon
+                    : notVisitedIcon
+                  : notVisitedIcon
+              }
             >
               <Popup>
                 <b>{item.name}</b>
