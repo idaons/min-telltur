@@ -1,5 +1,5 @@
-import "./globals.css";
 import { Inter } from "next/font/google";
+import { ChakraProviders } from "./ChakraProviders";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="no">
-      <body>{children}</body>
+      <ChakraProviders>
+        <body>{children}</body>
+      </ChakraProviders>
     </html>
   );
 }
