@@ -18,8 +18,7 @@ export default function Home() {
           </a>
         </h1>
         <p>
-          Utviklet av{" "}
-          <a href="https://github.com/idaons/min-telltur">Ida Onshus</a>
+          <a href="https://github.com/idaons/min-telltur">Github</a>
         </p>
       </div>
     </main>
