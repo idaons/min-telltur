@@ -10,6 +10,17 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <MapWithNoSSR />
+      <div className={styles.info}>
+        <h1>
+          Turmål,{" "}
+          <a href="https://www.telltur.no/friluftsrad/salten">
+            Ti på topp Hamarøy
+          </a>
+        </h1>
+        <p>
+          <a href="https://github.com/idaons/min-telltur">Github</a>
+        </p>
+      </div>
     </main>
   );
 }

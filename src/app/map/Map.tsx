@@ -28,10 +28,11 @@ const visitedIcon = Leaflet.icon({
   className: styles.markerIcon,
   iconSize: [30, 30],
 });
+
 const notVisitedIcon = Leaflet.icon({
   iconUrl: "/NotVisited2.svg",
-  className: styles.markerIcon,
-  iconSize: [30, 30],
+  className: `${styles.markerIcon} ${styles.notVisitedIcon}`,
+  iconSize: [25, 25],
 });
 
 const INITIAL_BOUNDS: LatLngBoundsExpression = [
