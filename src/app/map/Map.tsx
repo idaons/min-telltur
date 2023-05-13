@@ -10,6 +10,8 @@ import styles from "./map.module.css";
 import Leaflet, { LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import { convertPoint } from "@/pointToLatLon";
 import { tiPaToppHamaroy } from "@/TiPaToppHamaroy";
+import { useLocalStorageState } from "@/useLocalStorageState";
+
 /*
 const LeafIcon = Leaflet.Icon.extend({
   options: {
@@ -20,7 +22,6 @@ const LeafIcon = Leaflet.Icon.extend({
     //    popupAnchor: [-3, -76],
   },
 });
-
  */
 
 const visitedIcon = Leaflet.icon({
@@ -42,6 +43,18 @@ const INITIAL_BOUNDS: LatLngBoundsExpression = [
 
 const Map = () => {
   const mapCenter: LatLngExpression = [68.081251, 15.650711];
+  const [visited, setVisited] = useLocalStorageState<string[]>(
+    "tiPaToppHamaroy",
+    []
+  );
+
+  const onCheckboxChange = (turmal: string) => {
+    if (visited.includes(turmal)) {
+      setVisited(visited.filter((it) => it !== turmal));
+    } else {
+      setVisited([...visited, turmal]);
+    }
+  };
 
   return (
     <>
@@ -63,17 +76,20 @@ const Map = () => {
             <Marker
               key={item.name}
               position={point}
-              icon={
-                process.env.NODE_ENV === "development"
-                  ? item.visited
-                    ? visitedIcon
-                    : notVisitedIcon
-                  : notVisitedIcon
-              }
+              icon={visited.includes(item.name) ? visitedIcon : notVisitedIcon}
             >
               <Popup>
                 <b>{item.name}</b>
-                <div>{item.poeng} poeng</div>
+                <div>{item.points} poeng</div>
+
+                <label className={styles.checkbox}>
+                  <input
+                    type="checkbox"
+                    checked={visited.includes(item.name)}
+                    onChange={() => onCheckboxChange(item.name)}
+                  />
+                  Besøkt
+                </label>
               </Popup>
             </Marker>
           );

@@ -21,8 +21,7 @@ export function convertPoint(point: string) {
   // Output the latitude and longitude of the point
   const latitude = point4326[1];
   const longitude = point4326[0];
-  console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+  //console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 
   return [latitude, longitude] as LatLngExpression;
-  //  console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 }
