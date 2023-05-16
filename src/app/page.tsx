@@ -1,5 +1,4 @@
-"use client";
-import { Box, Heading, Link } from "@chakra-ui/react";
+import styles from "./page.module.css";
 import dynamic from "next/dynamic";
 
 export default function Home() {
@@ -9,35 +8,19 @@ export default function Home() {
   });
 
   return (
-    <Box
-      as="main"
-      display="flex"
-      flex-direction="column"
-      align-items="center"
-      min-height="100vh"
-    >
+    <main className={styles.main}>
       <MapWithNoSSR />
-      <Box
-        position="absolute"
-        display="grid"
-        gap=".25em"
-        bottom="0"
-        left="0"
-        zIndex="1000"
-        background="white"
-        color="black"
-        padding=".35rem"
-        fontFamily="sans-serif"
-        opacity=".5"
-      >
-        <Heading fontSize="1rem">
+      <div className={styles.info}>
+        <h1>
           Turmål,{" "}
-          <Link href="https://www.telltur.no/friluftsrad/salten">
+          <a href="https://www.telltur.no/friluftsrad/salten">
             Ti på topp Hamarøy
-          </Link>
-        </Heading>
-        <Link href="https://github.com/idaons/min-telltur">Github</Link>
-      </Box>
-    </Box>
+          </a>
+        </h1>
+        <p>
+          <a href="https://github.com/idaons/min-telltur">Github</a>
+        </p>
+      </div>
+    </main>
   );
 }
