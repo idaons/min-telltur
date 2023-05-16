@@ -1,10 +1,10 @@
 "use client";
-import { Box, Heading, Link } from "@chakra-ui/react";
+import { Box, Center, Heading, Link, Spinner } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 
 export default function Home() {
   const MapWithNoSSR = dynamic(() => import("./map/Map"), {
-    loading: () => <p>Laster...</p>,
+    loading: () => <Spinner />,
     ssr: false,
   });
 
@@ -12,8 +12,9 @@ export default function Home() {
     <Box
       as="main"
       display="flex"
-      flex-direction="column"
-      align-items="center"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
       minHeight="100vh"
     >
       <MapWithNoSSR />
