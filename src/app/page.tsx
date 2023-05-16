@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 export default function Home() {
   const MapWithNoSSR = dynamic(() => import("./map/Map"), {
-    loading: () => <p>loading...</p>,
+    loading: () => <p>Laster...</p>,
     ssr: false,
   });
 
@@ -14,7 +14,7 @@ export default function Home() {
       display="flex"
       flex-direction="column"
       align-items="center"
-      min-height="100vh"
+      minHeight="100vh"
     >
       <MapWithNoSSR />
       <Box

@@ -86,7 +86,7 @@ export const tiPaToppHamaroy: Destination[] = [
   },
   {
     name: "Kråknesodden",
-    points: 0,
+    points: 1,
     visited: false,
 
     geom: "POINT(1766858.3244401657 10489204.130346538)",
@@ -261,9 +261,8 @@ export const tiPaToppHamaroy: Destination[] = [
   },
   {
     name: "Trollvatnet",
-    points: 0,
+    points: 2,
     visited: true,
-
     geom: "POINT(1742110.0405787302 10490707.51999867)",
   },
 
