@@ -1,6 +1,8 @@
 "use client";
 import {
   Box,
+  Button,
+  Checkbox,
   Link,
   Modal,
   ModalBody,
@@ -12,10 +14,18 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useLocalStorageState } from "@/useLocalStorageState";
 
 export function Info() {
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const [vis, setVis] = useLocalStorageState<boolean>(
+    "tiPaToppHamaroyModal",
+    true
+  );
+  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: vis });
 
+  const setVisModal = (value: boolean) => {
+    setVis(value);
+  };
   return (
     <Box>
       <Link as="button" onClick={onOpen}>
@@ -55,6 +65,13 @@ export function Info() {
                   Hvis du ønsker å bidra ligger koden på Github.
                 </Link>
               </Text>
+              <Checkbox
+                width="fit-content"
+                checked={vis}
+                onChange={(e) => setVisModal(!e.target.checked)}
+              >
+                Ikke vis igjen
+              </Checkbox>
             </Stack>
           </ModalBody>
         </ModalContent>

@@ -21,7 +21,7 @@ export default function Home() {
     >
       <MapWithNoSSR />
       <Box
-        position="absolute"
+        position="fixed"
         display="grid"
         gap=".25em"
         bottom="0"
