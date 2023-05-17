@@ -6,6 +6,8 @@ function useLocalStorageState<S = undefined>(
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ): [S, Dispatch<SetStateAction<S>>] {
   const [state, setState] = React.useState<S>(() => {
+    if (typeof window === "undefined") return defaultValue;
+
     const localStorageValue = window.localStorage.getItem(key);
 
     if (localStorageValue) {
