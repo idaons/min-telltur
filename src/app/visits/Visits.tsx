@@ -11,9 +11,6 @@ const Visits = () => {
             Turmål
             <select>
               <option value="default">Choose…</option>
-              <option>Brine shrimp</option>
-              <option>Red panda</option>
-              <option>Spider monkey</option>
             </select>
           </label>
         </p>

@@ -1,10 +1,12 @@
 "use client";
-import { Box, Heading, Link } from "@chakra-ui/react";
+import { Box, Heading, Link, Spinner } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
+import { Info } from "./Info";
+import { Liste } from "./Liste";
 
 export default function Home() {
   const MapWithNoSSR = dynamic(() => import("./map/Map"), {
-    loading: () => <p>Laster...</p>,
+    loading: () => <Spinner />,
     ssr: false,
   });
 
@@ -12,13 +14,14 @@ export default function Home() {
     <Box
       as="main"
       display="flex"
-      flex-direction="column"
-      align-items="center"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
       minHeight="100vh"
     >
       <MapWithNoSSR />
       <Box
-        position="absolute"
+        position="fixed"
         display="grid"
         gap=".25em"
         bottom="0"
@@ -36,7 +39,8 @@ export default function Home() {
             Ti på topp Hamarøy
           </Link>
         </Heading>
-        <Link href="https://github.com/idaons/min-telltur">Github</Link>
+        <Info />
+        <Liste />
       </Box>
     </Box>
   );
