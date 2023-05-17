@@ -17,22 +17,18 @@ import {
 import { useLocalStorageState } from "@/useLocalStorageState";
 
 export function Info() {
-  const [vis, setVis] = useLocalStorageState<boolean>(
+  const [isOpen, setIsOpen] = useLocalStorageState<boolean>(
     "tiPaToppHamaroyModal",
     true
   );
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: vis });
 
-  const setVisModal = (value: boolean) => {
-    setVis(value);
-  };
   return (
     <Box>
-      <Link as="button" onClick={onOpen}>
+      <Link as="button" onClick={() => setIsOpen(true)}>
         Info
       </Link>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ModalOverlay />
         <ModalContent marginX="1rem">
           <ModalHeader>Turmål, Ti på topp Hamarøy</ModalHeader>
@@ -65,13 +61,6 @@ export function Info() {
                   Hvis du ønsker å bidra ligger koden på Github.
                 </Link>
               </Text>
-              <Checkbox
-                width="fit-content"
-                checked={vis}
-                onChange={(e) => setVisModal(!e.target.checked)}
-              >
-                Ikke vis igjen
-              </Checkbox>
             </Stack>
           </ModalBody>
         </ModalContent>

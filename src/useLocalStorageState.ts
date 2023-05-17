@@ -5,21 +5,20 @@ function useLocalStorageState<S = undefined>(
   defaultValue: S,
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ): [S, Dispatch<SetStateAction<S>>] {
-  const [state, setState] = React.useState<S>(() => {
-    if (typeof window === "undefined") return defaultValue;
+  const [state, setState] = React.useState<S>(
+    typeof defaultValue === "function" ? defaultValue() : defaultValue
+  );
 
+  React.useEffect(() => {
     const localStorageValue = window.localStorage.getItem(key);
+    if (!localStorageValue) return;
 
-    if (localStorageValue) {
-      try {
-        return deserialize(localStorageValue);
-      } catch (error) {
-        window.localStorage.removeItem(key);
-      }
+    try {
+      setState(deserialize(localStorageValue));
+    } catch (error) {
+      window.localStorage.removeItem(key);
     }
-
-    return typeof defaultValue === "function" ? defaultValue() : defaultValue;
-  });
+  }, []);
 
   React.useEffect(() => {
     window.localStorage.setItem(key, serialize(state));
