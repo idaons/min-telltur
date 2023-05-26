@@ -1,12 +1,10 @@
 "use client";
 import { Box, Heading, Link, Spinner } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
-import { Info } from "./Info";
-import { Liste } from "./Liste";
-import { tiPaToppHamaroy } from "@/TiPaToppHamaroy";
+import { turmal55Forforende } from "@/ForforendeTurmal";
 
 export default function Home() {
-  const MapWithNoSSR = dynamic(() => import("./map/Map"), {
+  const MapWithNoSSR = dynamic(() => import("../map/Map"), {
     loading: () => <Spinner />,
     ssr: false,
   });
@@ -20,7 +18,12 @@ export default function Home() {
       justifyContent="center"
       minHeight="100vh"
     >
-      <MapWithNoSSR destinations={tiPaToppHamaroy} />
+      <MapWithNoSSR
+        destinations={turmal55Forforende}
+        mapCenter={[67.373685, 15.157764]}
+        zoom={7}
+        localstorageKey={"55ForforendeTurmal"}
+      />
       <Box
         position="fixed"
         display="grid"
@@ -35,13 +38,11 @@ export default function Home() {
         opacity=".5"
       >
         <Heading fontSize="1rem">
-          Turmål,{" "}
+          Konkurranse:{" "}
           <Link href="https://www.telltur.no/friluftsrad/salten">
-            Ti på topp Hamarøy
+            55 Forførende Turmål
           </Link>
         </Heading>
-        <Info />
-        <Liste />
       </Box>
     </Box>
   );

@@ -11,6 +11,7 @@ import Leaflet, { LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import { convertPoint } from "@/pointToLatLon";
 import { tiPaToppHamaroy } from "@/TiPaToppHamaroy";
 import { useLocalStorageState } from "@/useLocalStorageState";
+import { Destination } from "@/types";
 
 /*
 const LeafIcon = Leaflet.Icon.extend({
@@ -41,10 +42,15 @@ const INITIAL_BOUNDS: LatLngBoundsExpression = [
   [59.9534114, 10.81431433498766],
 ];
 
-const Map = () => {
-  const mapCenter: LatLngExpression = [68.081251, 15.650711];
+interface Props {
+  destinations: Destination[];
+  mapCenter?: LatLngExpression;
+  zoom?: number;
+  localstorageKey?: string;
+}
+const Map = (props: Props) => {
   const [visited, setVisited] = useLocalStorageState<string[]>(
-    "tiPaToppHamaroy",
+    props.localstorageKey ?? "tiPaToppHamaroy",
     []
   );
 
@@ -59,8 +65,8 @@ const Map = () => {
   return (
     <>
       <MapContainer
-        center={mapCenter}
-        zoom={10}
+        center={props.mapCenter ?? [68.081251, 15.650711]}
+        zoom={props.zoom ?? 10}
         scrollWheelZoom={false}
         className={styles.map}
         bounds={INITIAL_BOUNDS}
@@ -69,7 +75,7 @@ const Map = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {tiPaToppHamaroy.map((item) => {
+        {props.destinations.map((item) => {
           const point = convertPoint(item.geom);
           if (!item.geom) return;
           return (
