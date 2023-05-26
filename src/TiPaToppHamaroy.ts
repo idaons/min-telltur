@@ -400,7 +400,7 @@ export const tiPaToppHamaroy: Destination[] = [
   },
   {
     name: "Olebu",
-    points: 1,
+    points: 4,
     visited: false,
 
     geom: "POINT(1702928.8837032695 10460116.74958649)",
