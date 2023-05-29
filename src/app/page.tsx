@@ -11,6 +11,8 @@ export default function Home() {
     ssr: false,
   });
 
+  console.log(process.env.NEXT_PUBLIC_VERCEL_URL);
+
   return (
     <Box
       as="main"
