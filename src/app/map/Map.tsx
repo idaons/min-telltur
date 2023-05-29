@@ -9,8 +9,9 @@ import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
 import Leaflet, { LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import { convertPoint } from "@/pointToLatLon";
-import { tiPaToppHamaroy } from "@/TiPaToppHamaroy";
+import { Destination, tiPaToppHamaroyDestinations } from "@/TiPaToppHamaroy";
 import { useLocalStorageState } from "@/useLocalStorageState";
+import { useHost } from "@/useHost";
 
 /*
 const LeafIcon = Leaflet.Icon.extend({
@@ -41,12 +42,28 @@ const INITIAL_BOUNDS: LatLngBoundsExpression = [
   [59.9534114, 10.81431433498766],
 ];
 
+type Konkuranse = "tiPaToppHamaroy" | "55forførendeTurmål";
+
+const hostToKonkuranseMap: Record<string, Konkuranse> = {
+  "https://turer-tipatopphamroy.vercel.app/": "tiPaToppHamaroy",
+  annenURl: "55forførendeTurmål",
+};
+
+const konkuranseToMarksersMap: Record<Konkuranse, Destination[]> = {
+  tiPaToppHamaroy: tiPaToppHamaroyDestinations,
+  "55forførendeTurmål": tiPaToppHamaroyDestinations, // TODO riktig locations her
+};
+
+const useKonkuranse = (): Konkuranse => {
+  const host = useHost() ?? "N/A";
+
+  return hostToKonkuranseMap[host] ?? "tiPaToppHamaroy"; // Default fallback til tiPaToppHamarøy
+};
+
 const Map = () => {
+  const konkuranse = useKonkuranse();
   const mapCenter: LatLngExpression = [68.081251, 15.650711];
-  const [visited, setVisited] = useLocalStorageState<string[]>(
-    "tiPaToppHamaroy",
-    []
-  );
+  const [visited, setVisited] = useLocalStorageState<string[]>(konkuranse, []);
 
   const onCheckboxChange = (turmal: string) => {
     if (visited.includes(turmal)) {
@@ -69,7 +86,7 @@ const Map = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {tiPaToppHamaroy.map((item) => {
+        {konkuranseToMarksersMap[konkuranse].map((item) => {
           const point = convertPoint(item.geom);
           if (!item.geom) return;
           return (
