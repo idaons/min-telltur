@@ -1,4 +1,4 @@
-interface Destination {
+export interface Destination {
   position?: any[];
   visited: boolean;
   name: string;
@@ -6,7 +6,7 @@ interface Destination {
   geom: string;
 }
 
-export const tiPaToppHamaroy: Destination[] = [
+export const tiPaToppHamaroyDestinations: Destination[] = [
   {
     name: "Hjelsengåsen",
     points: 2,

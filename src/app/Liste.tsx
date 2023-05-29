@@ -1,5 +1,5 @@
 "use client";
-import { tiPaToppHamaroy } from "@/TiPaToppHamaroy";
+import { tiPaToppHamaroyDestinations } from "@/TiPaToppHamaroy";
 import {
   Box,
   Link,
@@ -30,7 +30,7 @@ export function Liste() {
           <ModalCloseButton />
           <ModalBody paddingBottom="2rem">
             <OrderedList>
-              {tiPaToppHamaroy
+              {tiPaToppHamaroyDestinations
                 .sort((a, b) => (a.name > b.name ? 1 : -1))
                 .map((turmål, i) => (
                   <ListItem
