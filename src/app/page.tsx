@@ -10,9 +10,6 @@ export default function Home() {
     ssr: false,
   });
 
-  const host = useHost();
-  console.log({ host });
-
   return (
     <Box
       as="main"
