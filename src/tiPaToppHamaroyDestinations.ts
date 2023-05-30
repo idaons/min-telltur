@@ -1,6 +1,6 @@
 import { Destination } from "@/types";
 
-export const tiPaToppHamaroy: Destination[] = [
+export const tiPaToppHamaroyDestinations: Destination[] = [
   {
     name: "Hjelsengåsen",
     points: 2,

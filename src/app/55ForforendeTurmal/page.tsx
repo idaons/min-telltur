@@ -1,7 +1,7 @@
 "use client";
 import { Box, Heading, Link, Spinner } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
-import { turmal55Forforende } from "@/ForforendeTurmal";
+import { turmal55Forforende } from "@/turmal55ForforendeDestinations";
 
 export default function Home() {
   const MapWithNoSSR = dynamic(() => import("../map/Map"), {

@@ -3,7 +3,7 @@ import { Box, Heading, Link, Spinner } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { Info } from "./Info";
 import { Liste } from "./Liste";
-import { tiPaToppHamaroy } from "@/TiPaToppHamaroy";
+import { useHost } from "@/useHost";
 
 export default function Home() {
   const MapWithNoSSR = dynamic(() => import("./map/Map"), {
@@ -11,7 +11,8 @@ export default function Home() {
     ssr: false,
   });
 
-  console.log(process.env.NEXT_PUBLIC_VERCEL_URL);
+  const host = useHost();
+  console.log({ host });
 
   return (
     <Box
@@ -22,29 +23,7 @@ export default function Home() {
       justifyContent="center"
       minHeight="100vh"
     >
-      <MapWithNoSSR destinations={tiPaToppHamaroy} />
-      <Box
-        position="fixed"
-        display="grid"
-        gap=".25em"
-        bottom="0"
-        left="0"
-        zIndex="1000"
-        background="white"
-        color="black"
-        padding=".35rem"
-        fontFamily="sans-serif"
-        opacity=".5"
-      >
-        <Heading fontSize="1rem">
-          Turmål,{" "}
-          <Link href="https://www.telltur.no/friluftsrad/salten">
-            Ti på topp Hamarøy
-          </Link>
-        </Heading>
-        <Info />
-        <Liste />
-      </Box>
+      <MapWithNoSSR />
     </Box>
   );
 }

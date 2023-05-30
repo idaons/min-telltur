@@ -1,6 +1,6 @@
 import { Destination } from "@/types";
 
-export const turmal55Forforende: Destination[] = [
+export const turmal55ForforendeDestinations: Destination[] = [
   {
     id: 9555,
     points: 1,
