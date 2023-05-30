@@ -50,7 +50,11 @@ const INITIAL_BOUNDS: LatLngBoundsExpression = [
 
 const konkurranseMap: Record<KonkurranseNavn, KonkurranseProps> = {
   tiPaToppHamaroy: { destinations: tiPaToppHamaroyDestinations },
-  forforendeTurmal: { destinations: turmal55ForforendeDestinations, zoom: 5 },
+  forforendeTurmal: {
+    destinations: turmal55ForforendeDestinations,
+    zoom: 7,
+    mapCenter: [67.373685, 15.157764],
+  },
 };
 
 const useKonkurranse = (): KonkurranseNavn => {
