@@ -70,6 +70,7 @@ const hostToKonkurranseMap: Record<string, KonkurranseNavn> = {
 
 const Map = () => {
   const konkurranse = useKonkurranse();
+  console.log(konkurranse);
   const [visited, setVisited] = useLocalStorageState<string[]>(konkurranse, []);
 
   const onCheckboxChange = (turmal: string) => {
