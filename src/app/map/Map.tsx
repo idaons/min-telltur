@@ -64,8 +64,8 @@ const useKonkurranse = (): KonkurranseNavn => {
 };
 
 const hostToKonkurranseMap: Record<string, KonkurranseNavn> = {
-  "https://turer-tipatopphamroy.vercel.app/": "tiPaToppHamaroy",
-  "https://turer-55forforendeturmal.vercel.app/": "forforendeTurmal",
+  "turer-tipatopphamroy.vercel.app": "tiPaToppHamaroy",
+  "turer-55forforendeturmal.vercel.app": "forforendeTurmal",
 };
 
 const Map = () => {
