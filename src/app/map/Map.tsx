@@ -59,17 +59,17 @@ const konkurranseMap: Record<KonkurranseNavn, KonkurranseProps> = {
 
 const useKonkurranse = (): KonkurranseNavn => {
   const host = useHost() ?? "N/A";
+  console.log(host);
   return hostToKonkurranseMap[host] ?? "tiPaToppHamaroy"; // Default fallback til tiPaToppHamarøy
 };
 
 const hostToKonkurranseMap: Record<string, KonkurranseNavn> = {
   "https://turer-tipatopphamroy.vercel.app/": "tiPaToppHamaroy",
-  "https://turer-55forforendeturmal.vercel.app": "forforendeTurmal",
+  "https://turer-55forforendeturmal.vercel.app/": "forforendeTurmal",
 };
 
 const Map = () => {
   const konkurranse = useKonkurranse();
-  console.log(konkurranse);
   const [visited, setVisited] = useLocalStorageState<string[]>(konkurranse, []);
 
   const onCheckboxChange = (turmal: string) => {
