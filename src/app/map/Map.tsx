@@ -5,12 +5,19 @@
 // in the `pages` directory.
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { Box, Heading, Link, Spinner } from "@chakra-ui/react";
+
 import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
-import Leaflet, { LatLngBoundsExpression, LatLngExpression } from "leaflet";
+import Leaflet, { LatLngBoundsExpression } from "leaflet";
 import { convertPoint } from "@/pointToLatLon";
-import { tiPaToppHamaroy } from "@/TiPaToppHamaroy";
+import { tiPaToppHamaroyDestinations } from "@/tiPaToppHamaroyDestinations";
 import { useLocalStorageState } from "@/useLocalStorageState";
+import { KonkurranseNavn, KonkurranseProps } from "@/types";
+import { useHost } from "@/useHost";
+import { turmal55ForforendeDestinations } from "@/turmal55ForforendeDestinations";
+import { Liste } from "@/app/Liste";
+import { Info } from "@/app/Info";
 
 /*
 const LeafIcon = Leaflet.Icon.extend({
@@ -41,12 +48,29 @@ const INITIAL_BOUNDS: LatLngBoundsExpression = [
   [59.9534114, 10.81431433498766],
 ];
 
+const konkurranseMap: Record<KonkurranseNavn, KonkurranseProps> = {
+  tiPaToppHamaroy: { destinations: tiPaToppHamaroyDestinations },
+  forforendeTurmal: {
+    destinations: turmal55ForforendeDestinations,
+    zoom: 7,
+    mapCenter: [67.373685, 15.157764],
+  },
+};
+
+const useKonkurranse = (): KonkurranseNavn => {
+  const host = useHost() ?? "N/A";
+  return hostToKonkurranseMap[host] ?? "tiPaToppHamaroy"; // Default fallback til tiPaToppHamarøy
+};
+
+const hostToKonkurranseMap: Record<string, KonkurranseNavn> = {
+  "https://turer-tipatopphamroy.vercel.app/": "tiPaToppHamaroy",
+  "https://turer-55forforendeturmal.vercel.app": "forforendeTurmal",
+};
+
 const Map = () => {
-  const mapCenter: LatLngExpression = [68.081251, 15.650711];
-  const [visited, setVisited] = useLocalStorageState<string[]>(
-    "tiPaToppHamaroy",
-    []
-  );
+  const konkurranse = useKonkurranse();
+  console.log(konkurranse);
+  const [visited, setVisited] = useLocalStorageState<string[]>(konkurranse, []);
 
   const onCheckboxChange = (turmal: string) => {
     if (visited.includes(turmal)) {
@@ -56,11 +80,13 @@ const Map = () => {
     }
   };
 
+  const turmal = konkurranseMap[konkurranse];
+
   return (
     <>
       <MapContainer
-        center={mapCenter}
-        zoom={10}
+        center={turmal.mapCenter ?? [68.081251, 15.650711]}
+        zoom={turmal.zoom ?? 10}
         scrollWheelZoom={false}
         className={styles.map}
         bounds={INITIAL_BOUNDS}
@@ -69,7 +95,7 @@ const Map = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {tiPaToppHamaroy.map((item) => {
+        {turmal.destinations.map((item) => {
           const point = convertPoint(item.geom);
           if (!item.geom) return;
           return (
@@ -95,6 +121,43 @@ const Map = () => {
           );
         })}
       </MapContainer>
+      <Box
+        position="fixed"
+        display="grid"
+        gap=".25em"
+        bottom="0"
+        left="0"
+        zIndex="1000"
+        background="white"
+        color="black"
+        padding=".35rem"
+        fontFamily="sans-serif"
+        opacity=".5"
+      >
+        {konkurranse?.includes("tiPaToppHamaroy") ? (
+          <>
+            <Heading fontSize="1rem">
+              Turmål,{" "}
+              <Link href="https://www.telltur.no/friluftsrad/salten">
+                Ti på topp Hamarøy
+              </Link>
+            </Heading>
+            <Info />
+
+            <Liste />
+          </>
+        ) : (
+          <>
+            {" "}
+            <Heading fontSize="1rem">
+              Konkurranse:{" "}
+              <Link href="https://www.telltur.no/friluftsrad/salten">
+                55 Forførende Turmål
+              </Link>
+            </Heading>
+          </>
+        )}
+      </Box>
     </>
   );
 };
