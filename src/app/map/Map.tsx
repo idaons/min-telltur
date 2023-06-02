@@ -5,9 +5,7 @@
 // in the `pages` directory.
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Box, Heading, Link, Spinner } from "@chakra-ui/react";
-import Head from "next/head";
-
+import { Box, Heading, Link } from "@chakra-ui/react";
 import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
 import Leaflet, { LatLngBoundsExpression } from "leaflet";
@@ -19,6 +17,7 @@ import { useHost } from "@/useHost";
 import { turmal55ForforendeDestinations } from "@/turmal55ForforendeDestinations";
 import { Liste } from "@/app/Liste";
 import { Info } from "@/app/Info";
+import { useEffect } from "react";
 
 /*
 const LeafIcon = Leaflet.Icon.extend({
@@ -71,6 +70,12 @@ const hostToKonkurranseMap: Record<string, KonkurranseNavn> = {
 const Map = () => {
   const konkurranse = useKonkurranse();
   const [visited, setVisited] = useLocalStorageState<string[]>(konkurranse, []);
+
+  useEffect(() => {
+    if (konkurranse === "forforendeTurmal") {
+      document.title = "55 Forførende turmål";
+    }
+  }, [konkurranse]);
 
   const onCheckboxChange = (turmal: string) => {
     if (visited.includes(turmal)) {
