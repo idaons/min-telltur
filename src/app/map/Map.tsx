@@ -6,6 +6,7 @@
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Box, Heading, Link, Spinner } from "@chakra-ui/react";
+import Head from "next/head";
 
 import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
@@ -59,7 +60,6 @@ const konkurranseMap: Record<KonkurranseNavn, KonkurranseProps> = {
 
 const useKonkurranse = (): KonkurranseNavn => {
   const host = useHost() ?? "N/A";
-  console.log(host);
   return hostToKonkurranseMap[host] ?? "tiPaToppHamaroy"; // Default fallback til tiPaToppHamarøy
 };
 
@@ -70,7 +70,6 @@ const hostToKonkurranseMap: Record<string, KonkurranseNavn> = {
 
 const Map = () => {
   const konkurranse = useKonkurranse();
-  console.log(konkurranse);
   const [visited, setVisited] = useLocalStorageState<string[]>(konkurranse, []);
 
   const onCheckboxChange = (turmal: string) => {

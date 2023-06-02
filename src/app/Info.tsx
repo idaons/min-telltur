@@ -17,7 +17,7 @@ import {
 import { useLocalStorageState } from "@/useLocalStorageState";
 
 export function Info() {
-  const [isOpen, setIsOpen] = useLocalStorageState<boolean>(
+  const [isOpen, setIsOpen, keyExist] = useLocalStorageState<boolean>(
     "tiPaToppHamaroyModal",
     true
   );
@@ -28,7 +28,10 @@ export function Info() {
         Info
       </Link>
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal
+        isOpen={keyExist ? isOpen : false}
+        onClose={() => setIsOpen(false)}
+      >
         <ModalOverlay />
         <ModalContent marginX="1rem">
           <ModalHeader>Turmål, Ti på topp Hamarøy</ModalHeader>
